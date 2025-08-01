@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Örebro Musculoskeletal Pain Questionnaire (Short)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      height: auto;
+      min-height: 100vh;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      background-color: #f9f9f9;
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: left;
+      margin-bottom: 20px;
+    }
+
+    .section {
+      margin-bottom: 30px;
+      background-color: #fff;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    label, .question {
+      display: block;
+      margin: 8px 0;
+    }
+
+    .scale {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 10px;
+      margin-top: 5px;
+    }
+
+    .scale label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 0.85em;
+    }
+
+    .guide {
+      min-width: 130px;
+      font-size: 0.85em;
+      color: #444;
+    }
+
+    .score {
+      margin-top: 30px;
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      max-width: 600px;
+      padding: 6px;
+      font-size: 1em;
+    }
+
+    input[type="date"] {
+      padding: 6px;
+      font-size: 1em;
+      max-width: 250px;
+    }
+
+    @media screen and (max-width: 768px) {
+      .scale {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<h2>Örebro Musculoskeletal Pain Questionnaire (Short Form)</h2>
+
+<form id="orebro-form">
+  <div class="section">
+    <label>Name: <input type="text" name="name" maxlength="80" placeholder="Enter full name (up to 80 characters)" /></label>
+    <label>Date of Birth: <input type="date" name="dob" /></label>
+    <label>Date of Service: <input type="date" name="dos" /></label>
+  </div>
+
+  <div class="section">
+    <div class="question">1. How long have you had your current pain problem?</div>
+    <div class="scale">
+      <label><input type="radio" name="q1" value="1"> 0–1 week</label>
+      <label><input type="radio" name="q1" value="2"> 1–2 weeks</label>
+      <label><input type="radio" name="q1" value="3"> 3–4 weeks</label>
+      <label><input type="radio" name="q1" value="4"> 4–5 weeks</label>
+      <label><input type="radio" name="q1" value="5"> 6–8 weeks</label>
+      <label><input type="radio" name="q1" value="6"> 9–11 weeks</label>
+      <label><input type="radio" name="q1" value="7"> 3–6 months</label>
+      <label><input type="radio" name="q1" value="8"> 6–9 months</label>
+      <label><input type="radio" name="q1" value="9"> 9–12 months</label>
+      <label><input type="radio" name="q1" value="10"> Over 1 year</label>
+    </div>
+  </div>
+
+  <!-- Dynamic questions will be inserted here -->
+  <div id="dynamic-questions"></div>
+
+  <div class="score">
+    Total Score: <span id="total">0</span> / 100
+  </div>
+</form>
+
+<script>
+  const items = [
+    {id: 2, text: "2. Pain in the past week", left: "0 = No pain", right: "10 = Pain as bad as it could be"},
+    {id: 3, text: "3. I can do light work for an hour", left: "0 = Can’t do it because of the pain", right: "10 = Can do it without pain being a problem", reverse: true},
+    {id: 4, text: "4. I can sleep at night", left: "0 = Can’t do it because of the pain", right: "10 = Can do it without pain being a problem", reverse: true},
+    {id: 5, text: "5. Tension/anxiety past week", left: "0 = Absolutely calm and relaxed", right: "10 = As tense and anxious as I’ve ever felt"},
+    {id: 6, text: "6. Feeling depressed in the past week", left: "0 = Not at all", right: "10 = Extremely"},
+    {id: 7, text: "7. Risk that pain may become persistent", left: "0 = No risk", right: "10 = Very large risk"},
+    {id: 8, text: "8. Chance you will be working normally in 3 months", left: "0 = No chance", right: "10 = Very large chance", reverse: true},
+    {id: 9, text: "9. I should stop what I’m doing when pain increases", left: "0 = Completely disagree", right: "10 = Completely agree"},
+    {id: 10, text: "10. I should not do my normal work with my present pain", left: "0 = Completely disagree", right: "10 = Completely agree"}
+  ];
+
+  const dynamicQuestions = document.getElementById('dynamic-questions');
+
+  items.forEach(item => {
+    let radios = '';
+    for (let i = 0; i <= 10; i++) {
+      radios += `
+        <label>
+          <input type="radio" name="q${item.id}" value="${i}" ${item.reverse ? 'data-reverse="true"' : ''}>${i}
+        </label>
+      `;
+    }
+    const section = `
+      <div class="section">
+        <div class="question">${item.text}</div>
+        <div class="scale">
+          <span class="guide">${item.left}</span>
+          ${radios}
+          <span class="guide">${item.right}</span>
+        </div>
+      </div>
+    `;
+    dynamicQuestions.insertAdjacentHTML('beforeend', section);
+  });
+
+  const form = document.getElementById('orebro-form');
+  const totalSpan = document.getElementById('total');
+
+  form.addEventListener('change', () => {
+    let sum = 0;
+    let completed = 0;
+    const reverseQuestions = [3, 4, 8];
+
+    for (let i = 1; i <= 10; i++) {
+      const radios = form.querySelectorAll(`input[name="q${i}"]`);
+      for (let radio of radios) {
+        if (radio.checked) {
+          const val = parseInt(radio.value, 10);
+          if (reverseQuestions.includes(i)) {
+            sum += 10 - val;
+          } else {
+            sum += val;
+          }
+          completed++;
+          break;
+        }
+      }
+    }
+
+    totalSpan.textContent = `${sum}${completed === 10 ? '' : ' (incomplete)'}`;
+  });
+</script>
+
+</body>
+</html>
