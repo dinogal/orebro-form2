@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>QuickDASH Questionnaire</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background: #f9f9f9;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    form {
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      padding: 20px 30px 30px 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    }
+    .info label {
+      display: block;
+      margin-bottom: 8px;
+    }
+    .info input, .info select {
+      width: 95%;
+      padding: 5px;
+      margin-top: 2px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      font-size: 0.98em;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 6px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    th {
+      background-color: #f4f4f4;
+    }
+    tr.unanswered td {
+      background: #ffecec;
+    }
+    .score-box {
+      margin-top: 20px;
+      font-size: 1.1em;
+      background: #f4f8ff;
+      padding: 10px;
+      border-radius: 6px;
+    }
+    .highlight {
+      font-weight: bold;
+      color: #2a5d9f;
+    }
+    .warning {
+      color: #d00;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .btn-row {
+      text-align: right;
+      margin-top: 10px;
+    }
+    button {
+      padding: 7px 18px;
+      border-radius: 4px;
+      border: none;
+      background: #2a5d9f;
+      color: #fff;
+      font-size: 1em;
+      cursor: pointer;
+      margin-left: 10px;
+    }
+    button:active {
+      background: #1d3e6b;
+    }
+    @media (max-width: 600px) {
+      form { padding: 10px; }
+      table, th, td { font-size: 0.92em; }
+    }
+  </style>
+</head>
+<body>
+
+<h2>QuickDASH Questionnaire</h2>
+
+<form id="quickdash-form" autocomplete="off">
+  <div class="info">
+    <label for="patient_name">Patient Name:
+      <input type="text" name="patient_name" id="patient_name" aria-label="Patient Name">
+    </label>
+    <label for="mrn">MRN:
+      <input type="text" name="mrn" id="mrn" aria-label="MRN">
+    </label>
+    <label for="date">Date:
+      <input type="date" name="date" id="date" aria-label="Date">
+    </label>
+    <label for="dominant_hand">Dominant Hand:
+      <select name="dominant_hand" id="dominant_hand" aria-label="Dominant Hand">
+        <option value="R">R</option>
+        <option value="L">L</option>
+        <option value="Both">Both</option>
+      </select>
+    </label>
+    <label for="affected_arm">Affected Arm:
+      <select name="affected_arm" id="affected_arm" aria-label="Affected Arm">
+        <option value="R">R</option>
+        <option value="L">L</option>
+      </select>
+    </label>
+  </div>
+
+  <table id="questions-table">
+    <tr>
+      <th>Item</th>
+      <th>No Difficulty<br>(+1)</th>
+      <th>Mild<br>(+2)</th>
+      <th>Moderate<br>(+3)</th>
+      <th>Severe<br>(+4)</th>
+      <th>Unable<br>(+5)</th>
+    </tr>
+    <!-- Questions 1–11 -->
+    <tr>
+      <td>1. Open a tight or new jar.</td>
+      <td><input type="radio" name="q1" value="1" aria-label="No Difficulty"></td>
+      <td><input type="radio" name="q1" value="2" aria-label="Mild"></td>
+      <td><input type="radio" name="q1" value="3" aria-label="Moderate"></td>
+      <td><input type="radio" name="q1" value="4" aria-label="Severe"></td>
+      <td><input type="radio" name="q1" value="5" aria-label="Unable"></td>
+    </tr>
+    <tr>
+      <td>2. Do heavy household chores (e.g., wash walls, floors).</td>
+      <td><input type="radio" name="q2" value="1" aria-label="No Difficulty"></td>
+      <td><input type="radio" name="q2" value="2" aria-label="Mild"></td>
+      <td><input type="radio" name="q2" value="3" aria-label="Moderate"></td>
+      <td><input type="radio" name="q2" value="4" aria-label="Severe"></td>
+      <td><input type="radio" name="q2" value="5" aria-label="Unable"></td>
+    </tr>
+    <tr>
+      <td>3. Carry a shopping bag or briefcase.</td>
+      <td><input type="radio" name="q3" value="1" aria-label="No Difficulty"></td>
+      <td><input type="radio" name="q3" value="2" aria-label="Mild"></td>
+      <td><input type="radio" name="q3" value="3" aria-label="Moderate"></td>
+      <td><input type="radio" name="q3" value="4" aria-label="Severe"></td>
+      <td><input type="radio" name="q3" value="5" aria-label="Unable"></td>
+    </tr>
+    <tr>
+      <td>4. Wash your back.</td>
+      <td><input type="radio" name="q4" value="1" aria-label="No Difficulty"></td>
+      <td><input type="radio" name="q4" value="2" aria-label="Mild"></td>
+      <td><input type="radio" name="q4" value="3" aria-label="Moderate"></td>
+      <td><input type="radio" name="q4" value="4" aria-label="Severe"></td>
+      <td><input type="radio" name="q4" value="5" aria-label="Unable"></td>
+    </tr>
+    <tr>
+      <td>5. Use a knife to cut food.</td>
+      <td><input type="radio" name="q5" value="1" aria-label="No Difficulty"></td>
+      <td><input type="radio" name="q5" value="2" aria-label="Mild"></td>
+      <td><input type="radio" name="q5" value="3" aria-label="Moderate"></td>
+      <td><input type="radio" name="q5" value="4" aria-label="Severe"></td>
+      <td><input type="radio" name="q5" value="5" aria-label="Unable"></td>
+    </tr>
+    <tr>
+      <td>6. Recreational activities in which you take some force or impact through your arm, shoulder or hand (e.g., golf, hammering, tennis, etc.).</td>
+      <td><input type="radio" name="q6" value="1" aria-label="No Difficulty"></td>
+      <td><input type="radio" name="q6" value="2" aria-label="Mild"></td>
+      <td><input type="radio" name="q6" value="3" aria-label="Moderate"></td>
+      <td><input type="radio" name="q6" value="4" aria-label="Severe"></td>
+      <td><input type="radio" name="q6" value="5" aria-label="Unable"></td>
+    </tr>
+    <tr>
+      <td>7. How much has your condition interfered with normal social activities?</td>
+      <td><input type="radio" name="q7" value="1" aria-label="No Difficulty"></td>
+      <td><input type="radio" name="q7" value="2" aria-label="Mild"></td>
+      <td><input type="radio" name="q7" value="3" aria-label="Moderate"></td>
+      <td><input type="radio" name="q7" value="4" aria-label="Severe"></td>
+      <td><input type="radio" name="q7" value="5" aria-label="Unable"></td>
+    </tr>
+    <tr>
+      <td>8. Were you limited in work or daily activities due to arm, shoulder or hand problems?</td>
+      <td><input type="radio" name="q8" value="1" aria-label="No Difficulty"></td>
+      <td><input type="radio" name="q8" value="2" aria-label="Mild"></td>
+      <td><input type="radio" name="q8" value="3" aria-label="Moderate"></td>
+      <td><input type="radio" name="q8" value="4" aria-label="Severe"></td>
+      <td><input type="radio" name="q8" value="5" aria-label="Unable"></td>
+    </tr>
+    <tr>
+      <td>9. Rate the severity of your arm, shoulder or hand pain.</td>
+      <td><input type="radio" name="q9" value="1" aria-label="No Difficulty"></td>
+      <td><input type="radio" name="q9" value="2" aria-label="Mild"></td>
+      <td><input type="radio" name="q9" value="3" aria-label="Moderate"></td>
+      <td><input type="radio" name="q9" value="4" aria-label="Severe"></td>
+      <td><input type="radio" name="q9" value="5" aria-label="Unable"></td>
+    </tr>
+    <tr>
+      <td>10. Rate the severity of tingling (pins and needles).</td>
+      <td><input type="radio" name="q10" value="1" aria-label="No Difficulty"></td>
+      <td><input type="radio" name="q10" value="2" aria-label="Mild"></td>
+      <td><input type="radio" name="q10" value="3" aria-label="Moderate"></td>
+      <td><input type="radio" name="q10" value="4" aria-label="Severe"></td>
+      <td><input type="radio" name="q10" value="5" aria-label="Unable"></td>
+    </tr>
+    <tr>
+      <td>11. Difficulty sleeping due to the pain in your arm, shoulder or hand.</td>
+      <td><input type="radio" name="q11" value="1" aria-label="No Difficulty"></td>
+      <td><input type="radio" name="q11" value="2" aria-label="Mild"></td>
+      <td><input type="radio" name="q11" value="3" aria-label="Moderate"></td>
+      <td><input type="radio" name="q11" value="4" aria-label="Severe"></td>
+      <td><input type="radio" name="q11" value="5" aria-label="Unable"></td>
+    </tr>
+  </table>
+
+  <div class="score-box">
+    <p>Number of completed responses (n): <span id="n-count" class="highlight">0</span></p>
+    <p>Sum of selected scores: <span id="sum" class="highlight">0</span></p>
+    <p>QuickDASH Score = <span id="score" class="highlight">0</span></p>
+    <div id="warning" class="warning" style="display:none;">Please answer at least 10 questions for a valid score.</div>
+  </div>
+  <div class="btn-row">
+    <button type="button" id="reset-btn">Reset</button>
+  </div>
+</form>
+
+<script>
+  const form = document.getElementById('quickdash-form');
+  const totalQuestions = 11;
+  const table = document.getElementById('questions-table');
+  const warning = document.getElementById('warning');
+  const resetBtn = document.getElementById('reset-btn');
+
+  function updateScore() {
+    let sum = 0;
+    let n = 0;
+    let unansweredRows = [];
+
+    for (let i = 1; i <= totalQuestions; i++) {
+      const radios = form.querySelectorAll(`input[name="q${i}"]`);
+      let answered = false;
+      for (let radio of radios) {
+        if (radio.checked) {
+          sum += parseInt(radio.value);
+          n += 1;
+          answered = true;
+          break;
+        }
+      }
+      // Highlight unanswered questions
+      const row = table.rows[i];
+      if (row) {
+        if (!answered) {
+          row.classList.add('unanswered');
+          unansweredRows.push(i);
+        } else {
+          row.classList.remove('unanswered');
+        }
+      }
+    }
+
+    let score = 0;
+    if (n > 0) {
+      score = ((sum / n) - 1) * 25;
+      score = Math.round(score * 100) / 100;
+    }
+
+    document.getElementById('n-count').textContent = n;
+    document.getElementById('sum').textContent = sum;
+    document.getElementById('score').textContent = n >= 10 ? score : "N/A";
+    warning.style.display = n >= 10 ? "none" : "block";
+  }
+
+  form.addEventListener('change', updateScore);
+
+  resetBtn.addEventListener('click', () => {
+    form.reset();
+    updateScore();
+  });
+
+  // Initial highlight
+  updateScore();
+</script>
+
+</body>
+</html>
